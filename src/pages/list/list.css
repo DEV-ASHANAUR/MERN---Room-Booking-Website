@@ -1,0 +1,68 @@
+.search_container{
+    background-color: #febb02;
+    padding: 10px;
+    position: sticky;
+    top: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.searchTitle{
+    color: #fff;
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+.destInput{
+    width: 100%;
+    height: 1.6rem;
+    padding: 10px;
+    border: none;
+    text-align: center;
+}
+.destInput:focus{
+    outline: none;
+}
+.checkin_title{
+    color: #fff;
+    font-size: 1rem;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+.dateArea{
+    background-color: #fff;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.dateParent{
+    position: relative;
+    width: 100%;
+}
+.dateR{
+    
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 99999;
+}
+.optionArea{
+    display: flex;
+    flex-direction: column;
+
+}
+.optionItem>span{
+    color: #fff;
+    font-weight: 700;
+}
+.optionItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.optionItem>input{
+    
+    width: 50px;
+}

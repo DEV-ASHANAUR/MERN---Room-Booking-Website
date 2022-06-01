@@ -6,7 +6,9 @@ import './header.css'
 import { format } from "date-fns";
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import {useNavigate} from 'react-router-dom';
 const Header = ({ type }) => {
+    const navigate = useNavigate();
     const [destination, setDestination] = useState("");
     const [openDate, setOpenDate] = useState(false);
     const [openOptions, setOpenOptions] = useState(false);
@@ -30,6 +32,10 @@ const Header = ({ type }) => {
                 [name]: operation == 'i' ? options[name] + 1 : options[name] - 1
             }
         })
+    }
+    // handleSearch
+    const handleSearch = ()=>{
+        navigate("/hotels",{state:{destination,options,date}});
     }
     return (
         <div className='header'>
@@ -116,7 +122,7 @@ const Header = ({ type }) => {
                                     </div>}
                                 </div>
                                 <div className="searchBtn">
-                                    <button className='sBtn'>Search</button>
+                                    <button className='sBtn' onClick={handleSearch}>Search</button>
                                 </div>
                             </div>
                         </div>
