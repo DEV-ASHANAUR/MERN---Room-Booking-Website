@@ -6,7 +6,7 @@ import './header.css'
 import { format } from "date-fns";
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Header = ({ type }) => {
     const navigate = useNavigate();
     const [destination, setDestination] = useState("");
@@ -34,8 +34,8 @@ const Header = ({ type }) => {
         })
     }
     // handleSearch
-    const handleSearch = ()=>{
-        navigate("/hotels",{state:{destination,options,date}});
+    const handleSearch = () => {
+        navigate("/hotels", { state: { destination, options, date } });
     }
     return (
         <div className='header'>
@@ -74,7 +74,11 @@ const Header = ({ type }) => {
                         </div>
                         <div className="headerSearchItem">
                             <FontAwesomeIcon icon={faCalendarDay} className="headerIcon" />
-                            <span onClick={() => setOpenDate(!openDate)} className="headerSearchText">
+                            <span onClick={() => {
+                                if (openOptions) {
+                                    setOpenOptions(false);
+                                } setOpenDate(!openDate)
+                            }} className="headerSearchText">
                                 {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
                                     date[0].endDate,
                                     "MM/dd/yyyy"
@@ -89,14 +93,18 @@ const Header = ({ type }) => {
                                 minDate={new Date()}
                             />}
                         </div>
-                        <div className="headerSearchItem">
+                        <div className="headerSearchItem media">
                             <div className="searchLast">
                                 <div className="optionTitle">
                                     <FontAwesomeIcon icon={faPerson} className="headerIcon" />
-                                    <span onClick={() => setOpenOptions(!openOptions)}>{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
+                                    <span onClick={() => {
+                                        if (openDate) {
+                                            setOpenDate(false);
+                                        } setOpenOptions(!openOptions)
+                                    }}>{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
                                     {openOptions && <div className="options">
                                         <div className="optionItem">
-                                            <span className='optionText'>Adult</span>
+                                            <span className='optionText' style={{ color: "#000" }}>Adult</span>
                                             <div className="optionCounter">
                                                 <button disabled={options['adult'] <= 1} onClick={() => handleOption("adult", "d")} className='optionCounterBtn'>-</button>
                                                 <span className='optionCounterNumber'>{options['adult']}</span>
@@ -104,7 +112,7 @@ const Header = ({ type }) => {
                                             </div>
                                         </div>
                                         <div className="optionItem">
-                                            <span className='optionText'>Children</span>
+                                            <span className='optionText' style={{ color: "#000" }}>Children</span>
                                             <div className="optionCounter">
                                                 <button disabled={options['children'] <= 0} onClick={() => handleOption("children", "d")} className='optionCounterBtn'>-</button>
                                                 <span className='optionCounterNumber'>{options['children']}</span>
@@ -112,7 +120,7 @@ const Header = ({ type }) => {
                                             </div>
                                         </div>
                                         <div className="optionItem">
-                                            <span className='optionText'>Room</span>
+                                            <span className='optionText' style={{ color: "#000" }}>Room</span>
                                             <div className="optionCounter">
                                                 <button disabled={options['room'] <= 1} onClick={() => handleOption("room", "d")} className='optionCounterBtn'>-</button>
                                                 <span className='optionCounterNumber'>{options['room']}</span>
