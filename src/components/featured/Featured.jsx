@@ -1,6 +1,9 @@
 import React from 'react'
+import useFetch from '../../hooks/useFetch'
 import './featured.css'
 const Featured = () => {
+    const {data,loading,error} = useFetch("/hotels/countByCity?cities=dhaka,barisal,faridpur");
+    
     return (
         <div className='row'>
             <div className="col-md-4 position-relative mb-3">
@@ -11,7 +14,7 @@ const Featured = () => {
                 />
                 <div className="featuredTitles">
                     <h1>Dublin</h1>
-                    <h2>123 properties</h2>
+                    <h2>{data[0]} properties</h2>
                 </div>
             </div>
             <div className="col-md-4 position-relative mb-3">
@@ -22,7 +25,7 @@ const Featured = () => {
                 />
                 <div className="featuredTitles">
                     <h1>Dublin</h1>
-                    <h2>123 properties</h2>
+                    <h2>{data[1]} properties</h2>
                 </div>
             </div>
             <div className="col-md-4 position-relative mb-3">
@@ -33,11 +36,11 @@ const Featured = () => {
                 />
                 <div className="featuredTitles">
                     <h1>Dublin</h1>
-                    <h2>123 properties</h2>
+                    <h2>{data[2]} properties</h2>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Featured
+export default Featured;

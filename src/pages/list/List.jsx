@@ -10,13 +10,24 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import SearchItem from '../../components/searchItem/SearchItem'
 import Footer from '../../components/footer/Footer'
 import MailList from '../../components/mailList/MailList'
+import useFetch from '../../hooks/useFetch'
 const List = () => {
   const location = useLocation();
   // console.log(location.state);
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState(location.state.destination);
-  const [date, setDate] = useState(location.state.date);
+  const [dates, setDates] = useState(location.state.dates);
   const [options, setOptions] = useState(location.state.options);
+  const [min,setMin] = useState(undefined);
+  const [max,setMax] = useState(undefined);
+
+  const {data,loading,reFetch} = useFetch(`/hotels?city=${destination}&min=${min || 0}&max=${max || 999}`);
+
+  // console.log(data);'
+
+  const handleReFetch = ()=>{
+    reFetch();
+  }
 
   return (
     <div>
@@ -29,17 +40,17 @@ const List = () => {
               <h2 className='searchTitle'>Search</h2>
               <div className="searchItem">
                 <label className='text-white my-2' style={{ fontWeight: 700 }}>Destination</label>
-                <input type="text" className='destInput' placeholder={destination} />
+                <input type="text" onChange={(e)=>setDestination(e.target.value)} className='destInput' placeholder={destination} />
               </div>
               <div className="searchItem dateParent">
                 <label className='checkin_title my-2'>Check in And Check out date</label>
-                <span className='dateArea' onClick={() => setOpenDate(!openDate)}>{`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
-                  date[0].endDate,
+                <span className='dateArea' onClick={() => setOpenDate(!openDate)}>{`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
+                  dates[0].endDate,
                   "MM/dd/yyyy"
                 )}`}</span>
                 {openDate && <DateRange
-                  onChange={item => setDate([item.selection])}
-                  ranges={date}
+                  onChange={item => setDates([item.selection])}
+                  ranges={dates}
                   className="dateR"
                   minDate={new Date()}
                 />}
@@ -49,11 +60,11 @@ const List = () => {
                 <div className="optionArea">
                   <div className="optionItem">
                     <span>Min Price <small>Per Night</small></span>
-                    <input min="1" type="number" placeholder="Min Price" />
+                    <input min="1" onChange={(e)=>setMin(e.target.value)} type="number" placeholder="Min Price" />
                   </div>
                   <div className="optionItem">
                     <span>Max Price <small>Per Night</small></span>
-                    <input min="1" type="number" placeholder="Max price" />
+                    <input min="1" onChange={(e)=>setMax(e.target.value)} type="number" placeholder="Max price" />
                   </div>
                   <div className="optionItem">
                     <span>Adult</span>
@@ -69,12 +80,25 @@ const List = () => {
                   </div>
                 </div>
               </div>
-              <button className='sBtn w-100 rounded'>Search</button>
+              <button className='sBtn w-100 rounded' onClick={handleReFetch}>Search</button>
             </div>
           </div>
           <div className="col-md-9">
-              <SearchItem />
-              <SearchItem />
+              {
+                (loading)?(
+                  "loading"
+                ):
+                (
+                  <>
+                    {
+                      data.map((item)=>(
+                        <SearchItem key={item._id} item={item} />
+                      ))
+                    }
+                  </>
+                )
+              }
+              
           </div>
         </div>
       </div>

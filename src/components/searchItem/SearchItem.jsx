@@ -1,6 +1,6 @@
 import React from 'react'
 import './searchItem.css';
-const SearchItem = () => {
+const SearchItem = ({item}) => {
     return (
         <div className="row searchItemResult">
             <div className="col-md-3 p-0">
@@ -11,8 +11,8 @@ const SearchItem = () => {
                 />
             </div>
             <div className="col-md-6 siDesc">
-                <h1 className="siTitle">Tower Street Apartments</h1>
-                <span className="siDistance">500m from center</span>
+                <h1 className="siTitle">{item.name}</h1>
+                <span className="siDistance">{item.distance}m from center</span>
                 <span className="siTaxiOp">Free airport taxi</span>
                 <span className="siSubtitle">
                     Studio Apartment with Air conditioning
@@ -28,10 +28,10 @@ const SearchItem = () => {
             <div className="col-md-3 siDetails">
                 <div className="siRating">
                     <span>Excellent</span>
-                    <button>8.9</button>
+                    <button>{item.rating}</button>
                 </div>
                 <div className="siDetailTexts">
-                    <span className="siPrice">$112</span>
+                    <span className="siPrice">${item.cheapestPrice}</span>
                     <span className="siTaxOp">Includes taxes and fees</span>
                     <button className="siCheckButton">See availability</button>
                 </div>
