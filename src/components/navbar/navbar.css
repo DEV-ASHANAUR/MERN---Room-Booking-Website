@@ -22,6 +22,11 @@
     color: #003580;
     transition: 0.3s;
 }
+.logout{
+    background-color: red;
+    color: #fff;
+}
+
 .navBtn:hover{
     background-color: #f4f5f7;
     color: #003580;
