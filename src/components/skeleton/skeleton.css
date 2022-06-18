@@ -1,0 +1,138 @@
+.postSk {
+    width: 100%;
+    padding: 10px;
+    animation: skeleton 1s ease infinite alternate;
+    border: 2px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+  
+  @keyframes skeleton {
+    to {
+      opacity: 0.5;
+    }
+  }
+  
+  .postSkImg {
+    background-color: #313131;
+    width: 220px;
+    height: 153px;
+    flex: 1;
+  }
+  .postSkInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 2;
+  }
+  .info_basic {
+    height: 15px;
+	background-color: #313131;
+  }
+  .info1 {
+	width: 30%;
+  }
+  .info2 {
+	width: 33%;
+  }
+  .info3 {
+	width: 30%;
+  }
+  .info4 {
+	width: 65%;
+  }
+  .info5 {
+	width: 60%;
+  }
+  .info6 {
+	width: 35%;
+  }
+  .info7 {
+	width: 68%;
+  }
+  .ratingSk{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .SkItemtop{
+    display: flex;
+    justify-content: space-between;
+  }
+  .text1{
+    width: 30%;
+  }
+  .text2{
+    width: 8%;
+    height: 22px;
+    border-radius: 5.81818px 5.81818px 5.81818px 0;
+  }
+  .SkItemBtm{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+  .text3{
+    width: 15%;
+  }
+  .text4{
+    width: 60%;
+  }
+  .text5 {
+	padding: 14px 45px;
+	border-radius: 5px;
+}
+
+.ReSk{
+    width: 335px;
+    height: 108px;
+    padding: 20px;
+    animation: skeleton 1s ease infinite alternate;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 50px;
+}
+.ReLeft{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.text11{
+    width: 80%;
+}
+.text22{
+    width: 95%;
+}
+.text33{
+    width: 70%;
+}
+.text44{
+    width: 50%;
+}
+
+.ReRight{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text55{
+    width: 40%;
+}
+.text66{
+    width: 20%;
+}
+.text77{
+    width: 40%;
+}
+ 

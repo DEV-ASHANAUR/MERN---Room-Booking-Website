@@ -12,14 +12,19 @@ import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer'
 import MailList from '../../components/mailList/MailList'
 import './hotel.css';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import { AuthContext } from "../../context/AuthContext";
+import Reserve from "../../components/reserve/Reserve";
+
 const Hotel = () => {
+  const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
   const {dates,options} = useContext(SearchContext);
+  const {user} = useContext(AuthContext);
+  const navigate = useNavigate();
   const id = location.pathname.split('/')[2];
   const {data,loading} = useFetch(`/hotels/find/${id}`);
-  console.log(data)
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
 
@@ -52,10 +57,20 @@ const Hotel = () => {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
     },
   ];
+
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
   };
+
+  const handleClick = () =>{
+    if(user){
+      setOpenModal(true);
+    }else{
+    navigate("/login", {state:{from: location}} );
+    // return <Navigate to="/login" state={{from: location}} replace />
+    }
+  }
 
   const handleMove = (direction) => {
     let newSlideNumber;
@@ -101,7 +116,7 @@ const Hotel = () => {
         
           <div className="d-flex justify-content-between flex-wrap">
             <h1 className="hotelTitle">{data.name}</h1>
-            <button className="bookNow">Reserve or Book Now!</button>
+            <button className="bookNow" onClick={handleClick}>Reserve or Book Now!</button>
           </div>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot} />
@@ -141,13 +156,14 @@ const Hotel = () => {
               <h2>
                 <b>${days * data.cheapestPrice * options.room}</b> ({days} nights)
               </h2>
-              <button className='reserveNow'>Reserve or Book Now!</button>
+              <button className='reserveNow' onClick={handleClick}>Reserve or Book Now!</button>
             </div>
           </div>
         </div>
       </div>
       <MailList />
       <Footer />
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
     </div>
   )
 }

@@ -2,12 +2,13 @@ import axios from 'axios';
 import React from 'react'
 import { useContext } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import './login.css';
 const Login = () => {
-   
+   const location = useLocation();
+   let from = location.state?.from?.pathname || "/";
     const [credentials,setCredentials] = useState({
         email:undefined,
         password:undefined,
@@ -15,7 +16,7 @@ const Login = () => {
     const {user,loading,error,dispatch} = useContext(AuthContext);
     const navigate = useNavigate();
     if(user){
-        navigate("/");
+        navigate(from,{replace:true});
     }
     if(error){
         toast.error(error.message,{position: "bottom-right"});
@@ -31,7 +32,7 @@ const Login = () => {
         try {
             const res = await axios.post("/auth/login",credentials);
             dispatch({type:"LOGIN_SUCCESS",payload:res.data.details});
-            navigate("/");
+            navigate(from,{replace:true});
         } catch (error) {
             dispatch({type:"LOGIN_FAILURE",payload:error.response.data});
         }

@@ -11,9 +11,13 @@ import SearchItem from '../../components/searchItem/SearchItem'
 import Footer from '../../components/footer/Footer'
 import MailList from '../../components/mailList/MailList'
 import useFetch from '../../hooks/useFetch'
+import { useContext } from 'react'
+import { SearchContext } from '../../context/SearchContext'
+import Skeleton from '../../components/skeleton/Skeleton'
+
 const List = () => {
   const location = useLocation();
-  // console.log(location.state);
+  const {dispatch} = useContext(SearchContext);
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState(location.state.destination);
   const [dates, setDates] = useState(location.state.dates);
@@ -23,9 +27,8 @@ const List = () => {
 
   const {data,loading,reFetch} = useFetch(`/hotels?city=${destination}&min=${min || 0}&max=${max || 999}`);
 
-  // console.log(data);'
-
   const handleReFetch = ()=>{
+    dispatch({type: "NEW_SEARCH",payload: {destination, options, dates}});
     reFetch();
   }
 
@@ -68,15 +71,27 @@ const List = () => {
                   </div>
                   <div className="optionItem">
                     <span>Adult</span>
-                    <input min="1" type="number" placeholder={options.adult} />
+                    <input min="1" type="number" value={options.adult} onChange={(e)=>setOptions((prev)=>{
+                      return {
+                        ...prev,["adult"]:parseInt(e.target.value)
+                      }
+                    })} placeholder={options.adult} />
                   </div>
                   <div className="optionItem">
                     <span>Children</span>
-                    <input min="0" type="number" placeholder={options.children} />
+                    <input min="0" type="number" value={options.children} onChange={(e)=>setOptions((prev)=>{
+                      return {
+                        ...prev,["children"]:parseInt(e.target.value)
+                      }
+                    })} placeholder={options.children} />
                   </div>
                   <div className="optionItem">
                     <span>Room</span>
-                    <input min="1" type="number" placeholder={options.room} />
+                    <input min="1" type="number" value={options.room} onChange={(e)=>setOptions((prev)=>{
+                      return {
+                        ...prev,["room"]:parseInt(e.target.value)
+                      }
+                    })} placeholder={options.room} />
                   </div>
                 </div>
               </div>
@@ -86,14 +101,21 @@ const List = () => {
           <div className="col-md-9">
               {
                 (loading)?(
-                  "loading"
+                  <Skeleton type="item" />
                 ):
                 (
                   <>
                     {
-                      data.map((item)=>(
-                        <SearchItem key={item._id} item={item} />
-                      ))
+                      data.length ? (
+                        data.map((item)=>(
+                          <SearchItem key={item._id} item={item} />
+                        ))
+                      ):
+                      (
+                        <div className="text-center">
+                          <h2>Sorry,we couldn't find any results</h2>
+                        </div>
+                      )
                     }
                   </>
                 )
