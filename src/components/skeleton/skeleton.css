@@ -135,4 +135,12 @@
 .text77{
     width: 40%;
 }
+.TableSk{
+  animation: skeleton 1s ease infinite alternate;
+}
+
+.TableSk td{
+  background-color: #313131;
+  padding: 20px;
+}
  

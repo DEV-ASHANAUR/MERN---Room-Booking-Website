@@ -1,0 +1,14 @@
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+.info h2{
+    font-size: 15px;
+    text-transform: uppercase;
+}
+.reservation h2{
+    font-size: 20px;
+}

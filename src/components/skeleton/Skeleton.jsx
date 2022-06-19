@@ -44,8 +44,19 @@ const Skeleton = ({ type }) => {
         </div>
     )
 
+    const TableSk = () => (
+        <tr className='TableSk'>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    )
+
     if (type === 'item') return Array(COUNTER).fill(<ItemSkeleton />);
     if (type === 'reserve') return Array(5).fill(<ReserveSkeleton />);
+    if (type === 'table') return Array(5).fill(<TableSk />)
 
 }
 

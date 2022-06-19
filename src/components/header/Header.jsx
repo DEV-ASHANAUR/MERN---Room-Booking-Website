@@ -29,6 +29,7 @@ const Header = ({ type }) => {
         children: 0,
         room: 1
     })
+    console.log(user);
     const handleOption = (name, operation) => {
         setOptions((prev) => {
             return {

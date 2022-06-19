@@ -163,7 +163,7 @@ const Hotel = () => {
       </div>
       <MailList />
       <Footer />
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} hotelName={data.name} totalPrice={days * data.cheapestPrice * options.room} />}
     </div>
   )
 }
