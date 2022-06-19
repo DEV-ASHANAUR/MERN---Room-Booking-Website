@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Skeleton from '../skeleton/Skeleton';
 import { AuthContext } from '../../context/AuthContext';
 const Reserve = ({ setOpen, hotelId,hotelName,totalPrice }) => {
+    const [loader,setLoader] = useState(false);
     const navigate = useNavigate();
     const [selectedRooms,setSelectedRooms] = useState([]);
     const {data,loading} = useFetch(`/hotels/room/${hotelId}`);
@@ -21,6 +22,7 @@ const Reserve = ({ setOpen, hotelId,hotelName,totalPrice }) => {
     const [rooms,setRooms] = useState([]);
     
     const getDatesInRange = (startDate, endDate) => {
+         
         const start = new Date(startDate);
         const end = new Date(endDate);
     
@@ -60,39 +62,46 @@ const Reserve = ({ setOpen, hotelId,hotelName,totalPrice }) => {
 
     //handleClick
     const handleClick = async () =>{
-        try {
-            await Promise.all(
-                selectedRooms.map((roomId)=>{
-                    const res = axios.put(`/rooms/availability/${roomId}`,{
-                        dates:alldates
-                    });
-                    return res.data;
-                })
-            )
+        if(rooms.length){
+            setLoader(true);
             try {
-        
-                const res = await axios.post('/reserve',{
-                    userId : user._id,
-                    userName : user.username,
-                    userEmail : user.email,
-                    checkIn: format(dates[0].startDate, "MM/dd/yyyy"),
-                    checkOut: format(dates[0].endDate, "MM/dd/yyyy"),
-                    price: totalPrice,
-                    bookedRoom:rooms,
-                    hotelId:hotelId,
-                    hotelName:hotelName
-                })
-                console.log(res)
-                toast.success("Reservation Complete!");
-                setTimeout(()=>{
-                    navigate("/");
-                },3000)
+                await Promise.all(
+                    selectedRooms.map((roomId)=>{
+                        const res = axios.put(`/rooms/availability/${roomId}`,{
+                            dates:alldates
+                        });
+                        return res.data;
+                    })
+                )
+                try {
+            
+                    const res = await axios.post('/reserve',{
+                        userId : user._id,
+                        userName : user.username,
+                        userEmail : user.email,
+                        checkIn: format(dates[0].startDate, "MM/dd/yyyy"),
+                        checkOut: format(dates[0].endDate, "MM/dd/yyyy"),
+                        price: totalPrice,
+                        bookedRoom:rooms,
+                        hotelId:hotelId,
+                        hotelName:hotelName
+                    })
+                    console.log(res)
+                    toast.success("Reservation Complete!");
+                    setTimeout(()=>{
+                        navigate("/dashboard");
+                    },3000)
+                } catch (error) {
+                    toast.error(error);
+                }
             } catch (error) {
                 toast.error(error);
             }
-        } catch (error) {
-            toast.error(error);
+            setLoader(false);
+        }else{
+            toast.error("Sorry!Room is Not Available!");
         }
+        
     }
 
 
@@ -138,7 +147,7 @@ const Reserve = ({ setOpen, hotelId,hotelName,totalPrice }) => {
                       )
                     
                 }
-                <button onClick={handleClick} className="rButton">Reserve Now</button>
+                <button onClick={handleClick} className="rButton">{loader? "Processing..":"Reserve Now"}</button>
             </div>
         </div>
     )
