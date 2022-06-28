@@ -10,10 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { SearchContext } from '../../context/SearchContext';
 import { AuthContext } from '../../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
 const Header = ({ type }) => {
     const navigate = useNavigate();
     const {user} = useContext(AuthContext);
-    const [destination, setDestination] = useState("dhaka");
+    const [destination, setDestination] = useState();
     const [openDate, setOpenDate] = useState(false);
     const [openOptions, setOpenOptions] = useState(false);
     const [dates, setDates] = useState([
@@ -41,12 +42,17 @@ const Header = ({ type }) => {
     const {dispatch} = useContext(SearchContext);
     // handleSearch
     const handleSearch = () => {
+        if(destination && dates){
         dispatch({type: "NEW_SEARCH",payload: {destination, options, dates}});
 
         navigate("/hotels", { state: { destination, options, dates } });
+        }else{
+            toast.error("please fill out dates and others!");
+        }
     }
     return (
         <div className='header'>
+            <ToastContainer />
             <div className={type === "list" ? "container listMode" : "container default"}>
                 <div className="headerList">
                     <div className="headerListItem active">
@@ -78,7 +84,7 @@ const Header = ({ type }) => {
                     <div className="headerSearch">
                         <div className="headerSearchItem">
                             <FontAwesomeIcon icon={faBed} className="headerIcon" />
-                            <input type="text" placeholder="Where are You going?" className="headerSearchInput" onChange={(e) => setDestination(e.target.value)} />
+                            <input type="text" placeholder="Where are You going? Ex:dhaka,faridpur,barisal" className="headerSearchInput" onChange={(e) => setDestination(e.target.value)} />
                         </div>
                         <div className="headerSearchItem">
                             <FontAwesomeIcon icon={faCalendarDay} className="headerIcon" />
