@@ -31,7 +31,7 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="navbarItem">
-                <button className="navBtn me-3">Register</button>
+                <button className="navBtn me-3" onClick={()=>navigate("/register")}>Register</button>
                 <button className="navBtn" onClick={()=>navigate("/login")}>sign in</button>
               </div>
             )
