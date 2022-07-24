@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useContext } from 'react';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import './login.css';
@@ -49,6 +49,9 @@ const Login = () => {
                 <label htmlFor="password">Enter Password</label>
                 <input type="password" onChange={handleChange} id="password" placeholder='Enter password' />
             </div>
+            <Link to="/register" style={{textDecoration:"none"}}>
+                Have no any account? Register
+            </Link>
             <button disabled={loading} className='lBtn' onClick={handleClick}>Login</button>
         </div>
         <ToastContainer />

@@ -43,7 +43,7 @@ const List = () => {
               <h2 className='searchTitle'>Search</h2>
               <div className="searchItem">
                 <label className='text-white my-2' style={{ fontWeight: 700 }}>Destination</label>
-                <input type="text" onChange={(e)=>setDestination(e.target.value)} className='destInput' placeholder={destination} />
+                <input type="text" onChange={(e)=>setDestination(e.target.value.toLowerCase())} className='destInput' placeholder={destination} />
               </div>
               <div className="searchItem dateParent">
                 <label className='checkin_title my-2'>Check in And Check out date</label>

@@ -84,7 +84,7 @@ const Header = ({ type }) => {
                     <div className="headerSearch">
                         <div className="headerSearchItem">
                             <FontAwesomeIcon icon={faBed} className="headerIcon" />
-                            <input type="text" placeholder="Where are You going? Ex:dhaka,faridpur,barisal" className="headerSearchInput" onChange={(e) => setDestination(e.target.value)} />
+                            <input type="text" placeholder="Where are You going? Ex:dhaka,faridpur,barisal" className="headerSearchInput" onChange={(e) => setDestination(e.target.value.toLowerCase())} />
                         </div>
                         <div className="headerSearchItem">
                             <FontAwesomeIcon icon={faCalendarDay} className="headerIcon" />

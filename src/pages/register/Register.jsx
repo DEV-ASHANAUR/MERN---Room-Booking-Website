@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import '../login/login.css';
 const Register = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Register = () => {
       <div className="login_wrapper">
         <h2 className="title">Registation Here</h2>
         <div className="input_group">
-          <label htmlFor="username">Enter Email</label>
+          <label htmlFor="username">Enter Name</label>
           <input type="text" onChange={handleChange} id="username" placeholder='Enter Username' />
         </div>
         <div className="input_group">
@@ -57,6 +57,9 @@ const Register = () => {
           <label htmlFor="confirm_password">Enter Confirm Password</label>
           <input type="password" onChange={handleChange} id="confirm_password" placeholder='Enter password' />
         </div>
+        <Link to="/login" style={{textDecoration:"none"}}>
+                Have any account? Login
+            </Link>
         <button className='lBtn' onClick={handleClick}>Submit</button>
       </div>
       <ToastContainer />
